@@ -1,12 +1,9 @@
 package org.translation;
 
-import org.json.JSONArray;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +13,8 @@ import java.util.Map;
  */
 public class CountryCodeConverter {
 
-    private final Map<String, String> cmap = new HashMap() {
-    };
+    private final Map<String, String> codeToNameMap = new HashMap();
+    private final Map<String, String> nameToCodeMap = new HashMap();
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -42,7 +39,8 @@ public class CountryCodeConverter {
             for (int i = 1; i < length; i++) {
                 String line = lines.get(i);
                 List<String> lst = List.of(line.split("\t"));
-                this.cmap.put(lst.get(2), lst.get(0));
+                this.codeToNameMap.put(lst.get(2), lst.get(0));
+                this.nameToCodeMap.put(lst.get(0), lst.get(2));
 
             }
 
@@ -59,8 +57,7 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return code;
+        return this.codeToNameMap.get(code);
     }
 
     /**
@@ -69,8 +66,7 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+        return this.nameToCodeMap.get(country);
     }
 
     /**
@@ -78,7 +74,6 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+        return this.codeToNameMap.size();
     }
 }
