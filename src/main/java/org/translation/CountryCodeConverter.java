@@ -1,9 +1,12 @@
 package org.translation;
 
+import org.json.JSONArray;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +16,8 @@ import java.util.Map;
  */
 public class CountryCodeConverter {
 
-    // TODO Task: pick appropriate instance variable(s) to store the data necessary for this class
+    private final Map<String, String> cmap = new HashMap() {
+    };
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -34,7 +38,13 @@ public class CountryCodeConverter {
             List<String> lines = Files.readAllLines(Paths.get(getClass()
                     .getClassLoader().getResource(filename).toURI()));
 
-            // TODO Task: use lines to populate the instance variable(s)
+            int length = lines.size();
+            for (int i = 1; i < length; i++) {
+                String line = lines.get(i);
+                List<String> lst = List.of(line.split("\t"));
+                this.cmap.put(lst.get(2), lst.get(0));
+
+            }
 
         }
         catch (IOException | URISyntaxException ex) {

@@ -16,12 +16,23 @@ import org.json.JSONArray;
 public class JSONTranslator implements Translator {
 
     // TODO Task: pick appropriate instance variables for this class
+    private final JSONArray jsonArray;
 
     /**
      * Constructs a JSONTranslator using data from the sample.json resources file.
      */
+
     public JSONTranslator() {
-        this("sample.json");
+        try {
+            // this next line of code reads in a file from the resources folder as a String,
+            // which we then create a new JSONArray object from.
+            String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource("sample.json")
+                    .toURI()));
+            this.jsonArray = new JSONArray(jsonString);
+        }
+        catch (IOException | URISyntaxException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**
