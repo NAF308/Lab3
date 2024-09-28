@@ -64,19 +64,16 @@ public class JSONTranslator implements Translator {
 
     @Override
     public List<String> getCountryLanguages(String country) {
-        return this
+        return List.copyOf(this.countryToTransMap.get(country).keySet());
     }
 
     @Override
     public List<String> getCountries() {
-        // TODO Task: return an appropriate list of country codes,
-        //            but make sure there is no aliasing to a mutable object
-        return new ArrayList<>();
+        return new ArrayList<>(countryCodes);
     }
 
     @Override
     public String translate(String country, String language) {
-        // TODO Task: complete this method using your instance variables as needed
-        return null;
+        return this.countryToTransMap.get(country).get(language);
     }
 }
